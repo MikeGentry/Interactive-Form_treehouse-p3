@@ -5,6 +5,8 @@ const designMenu = document.querySelector('select[name="user_design"]');
 const colorDiv = document.querySelector('#colors-js-puns');
 const colorMenu = document.querySelector('select[id="color"]');
 const colors = colorMenu.children;
+const shopList = document.querySelector('.activities');
+const eachShop = shopList.children;
 
 nameField.focus();
 
@@ -42,3 +44,13 @@ designMenu.addEventListener('change', (event) => {
         colorDiv.style.display = 'none';
     }
 });
+
+const amClass = [];
+const pmClass = [];
+for (let i = 0; i < eachShop.length; i++) {
+    if (eachShop[i].className === 'am') {
+        amClass.push(eachShop[i]);
+    } else if (eachShop[i].className === 'pm') {
+        pmClass.push(eachShop[i]);
+    }
+}

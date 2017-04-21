@@ -8,10 +8,11 @@ const colors = colorMenu.children;
 const shopList = document.querySelector('.activities');
 const eachShop = shopList.children;
 
-//  TODO: Add Comments
-
+//  Focus on name field when page loads
 nameField.focus();
 
+//  Hides text field unless "other" job role is selected
+//  Displays text field if JavaScript is disabled
 otherTitle.style.display = 'none';
 jobMenu.addEventListener('change', (event) => {
     if (event.target.value === 'other') {
@@ -21,6 +22,8 @@ jobMenu.addEventListener('change', (event) => {
     }
 });
 
+//  Hides t-shirt color menu until user picks a design
+//  Color menu only displays members of a particular design that is selected
 colorDiv.style.display = 'none';
 designMenu.addEventListener('change', (event) => {
     colorDiv.style.display = '';
@@ -47,6 +50,7 @@ designMenu.addEventListener('change', (event) => {
     }
 });
 
+//  Arrays containing workshops occurring at the same time of day
 const amClass = [];
 const pmClass = [];
 for (let i = 0; i < eachShop.length; i++) {
@@ -57,6 +61,7 @@ for (let i = 0; i < eachShop.length; i++) {
     }
 }
 
+//  Event listener to prevent user from scheduling conflicting workshops
 shopList.addEventListener('change', () => {
     const checkbox = event.target;
     const isChecked = checkbox.checked;
@@ -86,4 +91,37 @@ shopList.addEventListener('change', () => {
             pmClass[0].disabled = false;
         }
     }
+});
+
+//  Function to total costs and display total line
+const totalSpan = document.createElement('span');
+function totalLine(mainCost, shopCost) {
+    const totalDue = mainCost + shopCost;
+    totalSpan.innerText = '';
+    totalSpan.innerText = 'Total Due: $' + totalDue;
+    shopList.appendChild(totalSpan);
+}
+
+//  Event listener to determine total cost of conference
+let mainCost = 0;
+let shopCost = 0;
+shopList.addEventListener('change', () => {
+    const checkbox = event.target;
+    const isChecked = checkbox.checked;
+    for (let i = 2; i < eachShop.length; i++) {
+        if (eachShop[1].firstElementChild === checkbox) {
+            if (isChecked) {
+                mainCost = 200;
+            } else {
+                mainCost = 0;
+            }
+        } else if (eachShop[i].firstElementChild === checkbox) {
+            if (isChecked) {
+                shopCost += 100;
+            } else {
+                shopCost -= 100;
+            }
+        }
+    }
+    totalLine(mainCost, shopCost);
 });

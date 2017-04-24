@@ -7,6 +7,10 @@ const colorMenu = document.querySelector('select[id="color"]');
 const colors = colorMenu.children;
 const shopList = document.querySelector('.activities');
 const eachShop = shopList.children;
+const paymentMenu = document.querySelector('select[id="payment"]');
+const ccDiv = document.querySelector('.credit-card');
+const paypalDiv = document.querySelector('.paypal');
+const bitcoinDiv = document.querySelector('.bitcoin');
 
 //  Focus on name field when page loads
 nameField.focus();
@@ -125,3 +129,37 @@ shopList.addEventListener('change', () => {
     }
     totalLine(mainCost, shopCost);
 });
+
+defaultPayment();
+paymentMenu.addEventListener('change', () => {
+    const pay = event.target;
+    if (pay.value === 'credit card') {
+        ccDiv.style.display = '';
+        paypalDiv.style.display = 'none';
+        bitcoinDiv.style.display = 'none';
+    } else if (pay.value === 'paypal') {
+        paypalDiv.style.display = '';
+        ccDiv.style.display = 'none';
+        bitcoinDiv.style.display = 'none';
+    } else if (pay.value === 'bitcoin') {
+        bitcoinDiv.style.display = '';
+        ccDiv.style.display = 'none';
+        paypalDiv.style.display = 'none';
+    }
+});
+
+function defaultPayment() {
+    const choices = paymentMenu.children;
+    choices[1].selected = true;
+    paypalDiv.style.display = 'none';
+    bitcoinDiv.style.display = 'none';
+}
+
+
+
+
+
+
+
+
+

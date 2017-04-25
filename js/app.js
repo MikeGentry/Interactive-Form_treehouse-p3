@@ -1,4 +1,6 @@
 const nameField = document.querySelector('#name');
+const emailLabel = document.querySelector('.email');
+const emailField = document.querySelector('#mail');
 const jobMenu = document.querySelector('select[name="user_title"]');
 const otherTitle = document.querySelector('#other-title');
 const designMenu = document.querySelector('select[name="user_design"]');
@@ -11,6 +13,8 @@ const paymentMenu = document.querySelector('select[id="payment"]');
 const ccDiv = document.querySelector('.credit-card');
 const paypalDiv = document.querySelector('.paypal');
 const bitcoinDiv = document.querySelector('.bitcoin');
+const submit = document.querySelector('button');
+
 
 //  Focus on name field when page loads
 nameField.focus();
@@ -130,6 +134,7 @@ shopList.addEventListener('change', () => {
     totalLine(mainCost, shopCost);
 });
 
+//  Displays payment info based on payment option selected
 defaultPayment();
 paymentMenu.addEventListener('change', () => {
     const pay = event.target;
@@ -148,6 +153,7 @@ paymentMenu.addEventListener('change', () => {
     }
 });
 
+//  Sets default payment option when page loads
 function defaultPayment() {
     const choices = paymentMenu.children;
     choices[1].selected = true;
@@ -155,11 +161,40 @@ function defaultPayment() {
     bitcoinDiv.style.display = 'none';
 }
 
+submit.addEventListener('click', (e) => {
+    const name = nameField.value;
+    const email = emailField.value;
+    if (name === '') {
+        nameField.className = 'error';
+        e.preventDefault();
+    } else {
+        nameField.className = '';
+    }
+    if (email === '') {
+        emailField.className = 'error';
+        e.preventDefault();
+        console.log('email error');
+    } else if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+        e.preventDefault();
+        errorMessage(emailLabel, ' Invalid Email Format');
+    } else {
+        emailField.className = '';
+        removeError(emailLabel);
+    }
+});
 
+function errorMessage(location, message) {
+    const msgSpan = document.createElement('span');
+    if (location.firstElementChild) {
+        location.firstElementChild.remove();
+    }
+    msgSpan.className = 'errorMsg';
+    msgSpan.innerText = message;
+    location.appendChild(msgSpan);
+}
 
-
-
-
-
-
-
+function removeError(location) {
+    if (location.firstElementChild) {
+        location.firstElementChild.remove();
+    }
+}

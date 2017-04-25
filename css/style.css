@@ -179,3 +179,14 @@ button:hover {
 		width: 49%;
 	}
 }
+
+.error {
+	border: 3px solid #ff0000;
+}
+
+.errorMsg {
+	font-size: 1.5em;
+	font-style: italic;
+	font-weight: bold;
+	color: #ff0000;
+}

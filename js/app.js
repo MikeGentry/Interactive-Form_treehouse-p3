@@ -9,8 +9,12 @@ const colorMenu = document.querySelector('select[id="color"]');
 const colors = colorMenu.children;
 const shopList = document.querySelector('.activities');
 const eachShop = shopList.children;
+const activityError = document.querySelector('.selectError');
 const paymentMenu = document.querySelector('select[id="payment"]');
 const ccDiv = document.querySelector('.credit-card');
+const ccNumField = document.querySelector('#cc-num');
+const zipField = document.querySelector('#zip');
+const cvvField = document.querySelector('#cvv');
 const paypalDiv = document.querySelector('.paypal');
 const bitcoinDiv = document.querySelector('.bitcoin');
 const submit = document.querySelector('button');
@@ -161,9 +165,18 @@ function defaultPayment() {
     bitcoinDiv.style.display = 'none';
 }
 
+// ***************
+// FORM VALIDATION
+// ***************
+
+//  When form is submitted, field values are checked
+//  and error messages or indications are presented
 submit.addEventListener('click', (e) => {
     const name = nameField.value;
     const email = emailField.value;
+    const ccNum = ccNumField.value;
+    const zip = zipField.value;
+    const cvv = cvvField.value;
     if (name === '') {
         nameField.className = 'error';
         e.preventDefault();
@@ -173,7 +186,6 @@ submit.addEventListener('click', (e) => {
     if (email === '') {
         emailField.className = 'error';
         e.preventDefault();
-        console.log('email error');
     } else if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
         e.preventDefault();
         errorMessage(emailLabel, ' Invalid Email Format');
@@ -181,8 +193,33 @@ submit.addEventListener('click', (e) => {
         emailField.className = '';
         removeError(emailLabel);
     }
+    if (mainCost + shopCost < 1) {
+        e.preventDefault();
+        errorMessage(activityError, 'Please select at least one activity');
+    } else {
+        removeError(activityError);
+    }
+    if (isNaN(ccNum) || ccNum.length < 13 || ccNum.length > 16) {
+        e.preventDefault();
+        ccNumField.className = 'error';
+    } else {
+        ccNumField.className = '';
+    }
+    if (isNaN(zip) || zip.length !== 5) {
+        e.preventDefault();
+        zipField.className = 'error';
+    } else {
+        zipField.className = '';
+    }
+    if (isNaN(cvv) || cvv.length !== 3) {
+        e.preventDefault();
+        cvvField.className = 'error';
+    } else {
+        cvvField.className = '';
+    }
 });
 
+//  Functions to add and remove custom error messages
 function errorMessage(location, message) {
     const msgSpan = document.createElement('span');
     if (location.firstElementChild) {

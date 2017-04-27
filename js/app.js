@@ -186,12 +186,6 @@ submit.addEventListener('click', (e) => {
     if (email === '') {
         emailField.className = 'error';
         e.preventDefault();
-    } else if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
-        e.preventDefault();
-        errorMessage(emailLabel, ' Invalid Email Format');
-    } else {
-        emailField.className = '';
-        removeError(emailLabel);
     }
     if (mainCost + shopCost < 1) {
         e.preventDefault();

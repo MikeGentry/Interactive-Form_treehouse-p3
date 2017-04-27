@@ -219,6 +219,19 @@ submit.addEventListener('click', (e) => {
     }
 });
 
+//  Event listener to display real time validity feedback for email field
+emailField.addEventListener('keyup', () => {
+    const email = emailField.value;
+    if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+        emailField.style.background = 'red';
+        errorMessage(emailLabel, ' Invalid Email Format');
+
+    } else {
+        emailField.style.background = '';
+        removeError(emailLabel);
+    }
+});
+
 //  Functions to add and remove custom error messages
 function errorMessage(location, message) {
     const msgSpan = document.createElement('span');

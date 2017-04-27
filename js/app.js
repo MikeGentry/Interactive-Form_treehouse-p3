@@ -199,23 +199,25 @@ submit.addEventListener('click', (e) => {
     } else {
         removeError(activityError);
     }
-    if (isNaN(ccNum) || ccNum.length < 13 || ccNum.length > 16) {
-        e.preventDefault();
-        ccNumField.className = 'error';
-    } else {
-        ccNumField.className = '';
-    }
-    if (isNaN(zip) || zip.length !== 5) {
-        e.preventDefault();
-        zipField.className = 'error';
-    } else {
-        zipField.className = '';
-    }
-    if (isNaN(cvv) || cvv.length !== 3) {
-        e.preventDefault();
-        cvvField.className = 'error';
-    } else {
-        cvvField.className = '';
+    if (paymentMenu.value === 'credit card') {
+        if (isNaN(ccNum) || ccNum.length < 13 || ccNum.length > 16) {
+            e.preventDefault();
+            ccNumField.className = 'error';
+        } else {
+            ccNumField.className = '';
+        }
+        if (isNaN(zip) || zip.length !== 5) {
+            e.preventDefault();
+            zipField.className = 'error';
+        } else {
+            zipField.className = '';
+        }
+        if (isNaN(cvv) || cvv.length !== 3) {
+            e.preventDefault();
+            cvvField.className = 'error';
+        } else {
+            cvvField.className = '';
+        }
     }
 });
 
